@@ -1,0 +1,36 @@
+<div class="main-div mat-elevation-z8">
+    <mat-table [dataSource]="dataSource" cdkDropListGroup>
+
+        <ng-container class="operational-column" [matColumnDef]="columns[0].field">
+            <mat-header-cell *matHeaderCellDef>
+                <button mat-button>Click me!</button>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+                <button mat-button>Click me!</button> 
+            </mat-cell>
+        </ng-container> 
+
+        <ng-container *ngFor="let column of columns | slice:1; let i = index" [matColumnDef]="column.field">
+            <mat-header-cell *matHeaderCellDef
+            class="cdk-drag-animating"
+            cdkDropList
+            cdkDropListLockAxis="x"
+            cdkDropListOrientation="horizontal"
+            (cdkDropListDropped)="dropListDropped($event, i)"
+            cdkDrag
+            (cdkDragStarted)="dragStarted($event, i)"
+            [cdkDragData]="{name: column.field, columIndex: i}">
+           {{ column.field }}
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row"> 
+             {{ row[column.field] }}  
+            </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+    <mat-paginator [pageSizeOptions]="[10, 20,30]" showFirstLastButtons></mat-paginator>
+</div>
+<!-- <search-table></search-table> -->
+
+      
